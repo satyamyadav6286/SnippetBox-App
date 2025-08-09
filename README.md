@@ -117,13 +117,18 @@ npm run preview
 <div align="center">
 
 ### 🖥️ Desktop View
-![Desktop View](https://via.placeholder.com/800x400/4f9cf9/ffffff?text=Desktop+View)
+![Desktop View 1](src/assets/screenshots/Desktop%20View1.png)
+![Desktop View 2](src/assets/screenshots/Desktop%20View2.png)
+![Desktop View 3](src/assets/screenshots/Desktop%20View3.png)
 
 ### 📱 Mobile View
-![Mobile View](https://via.placeholder.com/300x600/4f9cf9/ffffff?text=Mobile+View)
+![Mobile View 1](src/assets/screenshots/Mobile%20View1.jpg)
+![Mobile View 2](src/assets/screenshots/Mobile%20View2.jpg)
+![Mobile View 3](src/assets/screenshots/Mobile%20View3.jpg)
 
 ### 🌙 Dark Mode
-![Dark Mode](https://via.placeholder.com/800x400/1a1a2e/ffffff?text=Dark+Mode)
+![Dark Mode 1](src/assets/screenshots/Dark%20Mode1.png)
+![Dark Mode 2](src/assets/screenshots/Dark%20Mode2.png)
 
 </div>
 
