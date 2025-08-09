@@ -11,7 +11,7 @@
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3.3-7952B3?style=flat-square&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
 [![Redux](https://img.shields.io/badge/Redux-Toolkit-764ABC?style=flat-square&logo=redux&logoColor=white)](https://redux-toolkit.js.org/)
 
-[🚀 Live Demo](https://snippet-box-app.vercel.app/) • [📖 Documentation](#-features) • [🐛 Report Bug](https://github.com/satyamyadav6286/SnippetBox/issues)
+[🚀 Live Demo](https://snippet-box-app.vercel.app/) • [📖 Documentation](#-features) • [🐛 Report Bug](https://github.com/satyamyadav6286/SnippetBox-App/issues)
 
 </div>
 
