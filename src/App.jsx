@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 import Home from './components/Home';
 import Paste from './components/Paste';
 import ViewPaste from './components/ViewPaste';
+import ErrorBoundary from './components/ErrorBoundary';
 import { Toaster } from 'react-hot-toast';
 import './App.css';
 
@@ -46,22 +47,24 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <Provider store={store}>
-      <ThemeProvider>
-        <RouterProvider router={router} />
-        <Toaster
-          position="top-right"
-          toastOptions={{
-            duration: 3000,
-            style: {
-              background: 'var(--toast-bg)',
-              color: 'var(--toast-text)',
-              border: '1px solid var(--border-color)',
-            },
-          }}
-        />
-      </ThemeProvider>
-    </Provider>
+    <ErrorBoundary>
+      <Provider store={store}>
+        <ThemeProvider>
+          <RouterProvider router={router} />
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              duration: 3000,
+              style: {
+                background: 'var(--toast-bg)',
+                color: 'var(--toast-text)',
+                border: '1px solid var(--border-color)',
+              },
+            }}
+          />
+        </ThemeProvider>
+      </Provider>
+    </ErrorBoundary>
   );
 }
 

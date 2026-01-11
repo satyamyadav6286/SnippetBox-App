@@ -221,6 +221,11 @@ body {
   color: white !important;
 }
 
+.btn-sm {
+  padding: 0.5rem 1rem !important;
+  font-size: 0.875rem !important;
+}
+
 /* Icon Buttons */
 .icon-btn {
   background: var(--secondary-bg);
@@ -343,6 +348,17 @@ body {
   max-width: 1000px;
 }
 
+.view-paste-container .d-flex.justify-content-between {
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.view-paste-container .btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
 .paste-header {
   margin-bottom: 2rem;
   padding: 1.5rem;
@@ -390,6 +406,31 @@ body {
   color: var(--code-text);
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+/* Code Editor Styles */
+.code-editor-wrapper {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.code-editor-wrapper .cm-editor {
+  font-size: 14px;
+  font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+}
+
+.code-editor-wrapper .cm-scroller {
+  overflow: auto;
+}
+
+.code-editor-wrapper .cm-focused {
+  outline: none;
+}
+
+/* Improve CodeMirror theme integration */
+.code-editor-wrapper .cm-editor.cm-focused {
+  outline: 2px solid var(--accent-color);
+  outline-offset: -2px;
 }
 
 /* Footer Styles */
@@ -689,22 +730,32 @@ body {
     font-size: 0.75rem;
     padding: 0.75rem;
   }
-  
+
   .modern-card {
     border-radius: 10px;
   }
-  
+
   .qr-content {
     padding: 1rem;
     width: 95%;
   }
-  
+
   .footer {
     padding: 1.5rem 0;
   }
-  
+
   .footer-content {
     font-size: 0.8rem;
+  }
+
+  .view-paste-container .d-flex.justify-content-between {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .view-paste-container .btn-group {
+    width: 100%;
+    justify-content: center;
   }
 }
 

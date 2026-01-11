@@ -21,6 +21,10 @@ export const pasteSlice = createSlice({
   reducers: {
     Addpaste: (state, action) => {
       const paste = action.payload;
+      // Ensure language is set (default to 'text' if not provided)
+      if (!paste.language) {
+        paste.language = 'text';
+      }
       state.pastes.push(paste);
       try {
         localStorage.setItem('pastes', JSON.stringify(state.pastes));
@@ -35,6 +39,10 @@ export const pasteSlice = createSlice({
       const { id, newPaste } = action.payload;
       const index = state.pastes.findIndex(paste => paste.id === id);
       if (index !== -1) {
+        // Ensure language is set (default to 'text' if not provided)
+        if (!newPaste.language) {
+          newPaste.language = 'text';
+        }
         state.pastes[index] = { 
           ...newPaste, 
           updatedAt: new Date().toISOString() 

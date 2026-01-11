@@ -20,12 +20,13 @@ import {
   Sparkles,
   ArrowLeft,
   Eye,
-  QrCode
+  QrCode,
+  Languages
 } from 'lucide-react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import QRCode from 'qrcode';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import { exportSnippetToPDF } from '../utils/pdfExport';
+import { getSyntaxHighlighterLanguage, getLanguageName, detectLanguage } from '../utils/languageDetection';
 
 const ViewPaste = () => {
   const { id } = useParams();
@@ -65,9 +66,13 @@ const ViewPaste = () => {
 
   const handleDelete = () => {
     if (window.confirm('Are you sure you want to delete this paste?')) {
-      dispatch(Removefrompaste(id));
-      toast.success('Paste deleted successfully');
-      navigate('/');
+      try {
+        dispatch(Removefrompaste(id));
+        navigate('/');
+      } catch (error) {
+        console.error('Error deleting paste:', error);
+        toast.error('Failed to delete paste. Please try again.');
+      }
     }
   };
 
@@ -76,63 +81,64 @@ const ViewPaste = () => {
   };
 
   const handleDownload = () => {
-    const element = document.createElement('a');
-    const file = new Blob([paste.content], { type: 'text/plain' });
-    element.href = URL.createObjectURL(file);
-    element.download = `${paste.title}.txt`;
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-    toast.success('File downloaded successfully!');
+    try {
+      const element = document.createElement('a');
+      const file = new Blob([paste.content], { type: 'text/plain' });
+      element.href = URL.createObjectURL(file);
+      const extension = paste.language && paste.language !== 'text' 
+        ? (paste.language === 'javascript' ? '.js' : 
+           paste.language === 'python' ? '.py' :
+           paste.language === 'java' ? '.java' :
+           paste.language === 'html' ? '.html' :
+           paste.language === 'css' ? '.css' : '.txt')
+        : '.txt';
+      element.download = `${(paste.title || 'snippet').replace(/[^a-z0-9]/gi, '_').toLowerCase()}${extension}`;
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+      URL.revokeObjectURL(element.href);
+      toast.success('File downloaded successfully!');
+    } catch (error) {
+      console.error('Error downloading file:', error);
+      toast.error('Failed to download file. Please try again.');
+    }
   };
 
   const handleExportPDF = async () => {
     try {
-      const element = document.getElementById('paste-content');
-      const canvas = await html2canvas(element);
-      const imgData = canvas.toDataURL('image/png');
-      
-      const pdf = new jsPDF();
-      const imgWidth = 210;
-      const pageHeight = 295;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
-      
-      let position = 0;
-      
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-      
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
-      
-      pdf.save(`${paste.title}.pdf`);
-      toast.success('PDF exported successfully!');
+      toast.loading('Generating PDF...', { id: 'pdf-export' });
+      await exportSnippetToPDF(paste, isDarkMode ? 'dark' : 'light');
+      toast.success('PDF exported successfully!', { id: 'pdf-export' });
     } catch (error) {
-      toast.error('Failed to export PDF');
       console.error('PDF export error:', error);
+      toast.error('Failed to export PDF. Please try again.', { id: 'pdf-export' });
     }
   };
 
   const handleShare = async () => {
-    if (navigator.share) {
-      try {
+    try {
+      if (navigator.share) {
         await navigator.share({
           title: paste.title,
-          text: paste.content,
+          text: paste.content.substring(0, 200),
           url: window.location.href,
         });
-      } catch (error) {
-        console.error('Error sharing:', error);
+      } else {
+        // Fallback: copy URL to clipboard
+        await navigator.clipboard.writeText(window.location.href);
+        toast.success('URL copied to clipboard!');
       }
-    } else {
-      // Fallback: copy URL to clipboard
-      navigator.clipboard.writeText(window.location.href);
-      toast.success('URL copied to clipboard!');
+    } catch (error) {
+      if (error.name !== 'AbortError') {
+        console.error('Error sharing:', error);
+        // Fallback: copy URL to clipboard
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+          toast.success('URL copied to clipboard!');
+        } catch (clipboardError) {
+          toast.error('Failed to share. Please copy the URL manually.');
+        }
+      }
     }
   };
 
@@ -190,7 +196,7 @@ const ViewPaste = () => {
               <Share2 size={16} className="me-2" />
               Share
             </button>
-            <Link to={`/paste`} state={{ editPaste: paste }} className="btn btn-outline-secondary">
+            <Link to="/" state={{ editPaste: paste }} className="btn btn-outline-secondary">
               <Edit size={16} className="me-2" />
               Edit
             </Link>
@@ -223,6 +229,12 @@ const ViewPaste = () => {
                     {getCategoryIcon(paste.category)}
                     <span className="ms-1 text-capitalize">{paste.category}</span>
                   </span>
+                  {paste.category === 'code' && paste.language && paste.language !== 'text' && (
+                    <span className="d-flex align-items-center">
+                      <Languages size={16} className="me-1" />
+                      {getLanguageName(paste.language)}
+                    </span>
+                  )}
                   <span className="d-flex align-items-center">
                     <Calendar size={16} className="me-1" />
                     Created: {formatDate(paste.createdAt)}
@@ -262,19 +274,30 @@ const ViewPaste = () => {
           <div className="card-body">
             {paste.category === 'code' ? (
               <SyntaxHighlighter
-                language="javascript"
+                language={getSyntaxHighlighterLanguage(paste.language || detectLanguage(paste.content))}
                 style={isDarkMode ? vscDarkPlus : vs}
                 customStyle={{
                   margin: 0,
                   borderRadius: '8px',
-                  fontSize: '14px'
+                  fontSize: '14px',
+                  background: isDarkMode ? '#1e1e1e' : '#ffffff',
                 }}
                 showLineNumbers
+                wrapLines
+                wrapLongLines
               >
                 {paste.content}
               </SyntaxHighlighter>
             ) : (
-              <pre className="paste-content">{paste.content}</pre>
+              <pre className="paste-content" style={{
+                whiteSpace: 'pre-wrap',
+                wordBreak: 'break-word',
+                fontFamily: 'monospace',
+                fontSize: '14px',
+                lineHeight: '1.6',
+                margin: 0,
+                padding: 0,
+              }}>{paste.content}</pre>
             )}
           </div>
         </div>
