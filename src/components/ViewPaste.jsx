@@ -163,9 +163,9 @@ const ViewPaste = () => {
 
   return (
     <div className="view-paste-container">
-      <div className="container py-4">
+      <div className="modern-card fade-in">
         {/* Header */}
-        <div className="d-flex justify-content-between align-items-center mb-4">
+        <div className="d-flex justify-content-between align-items-center" style={{ paddingBottom: '1.5rem', borderBottom: '1px solid var(--border-color)', marginBottom: '1.5rem' }}>
           <Link to="/" className="btn btn-outline-secondary">
             <ArrowLeft size={16} className="me-2" />
             Back to Home
@@ -219,8 +219,14 @@ const ViewPaste = () => {
         )}
 
         {/* Paste Details */}
-        <div className="modern-card" id="paste-content">
-          <div className="card-header">
+        <div id="paste-content">
+          <div className="card-header" style={{ 
+            background: 'var(--secondary-bg)', 
+            padding: '1.5rem', 
+            borderRadius: '12px 12px 0 0',
+            border: '1px solid var(--border-color)',
+            borderBottom: 'none'
+          }}>
             <div className="d-flex justify-content-between align-items-start">
               <div>
                 <h2 className="card-title mb-2">{paste.title}</h2>
@@ -303,24 +309,18 @@ const ViewPaste = () => {
         </div>
 
         {/* Stats */}
-        <div className="row mt-4">
-          <div className="col-md-4">
-            <div className="stat-card">
-              <div className="stat-number">{paste.content.split('\n').length}</div>
-              <div className="stat-label">Lines</div>
-            </div>
+        <div className="stats-container" style={{ marginTop: '2rem' }}>
+          <div className="stat-card">
+            <div className="stat-number">{paste.content.split('\n').length}</div>
+            <div className="stat-label">Lines</div>
           </div>
-          <div className="col-md-4">
-            <div className="stat-card">
-              <div className="stat-number">{paste.content.split(' ').length}</div>
-              <div className="stat-label">Words</div>
-            </div>
+          <div className="stat-card">
+            <div className="stat-number">{paste.content.split(' ').length}</div>
+            <div className="stat-label">Words</div>
           </div>
-          <div className="col-md-4">
-            <div className="stat-card">
-              <div className="stat-number">{paste.content.length}</div>
-              <div className="stat-label">Characters</div>
-            </div>
+          <div className="stat-card">
+            <div className="stat-number">{paste.content.length}</div>
+            <div className="stat-label">Characters</div>
           </div>
         </div>
       </div>

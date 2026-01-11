@@ -108,7 +108,7 @@ const Paste = () => {
           </p>
         </div>
 
-        <div style={{ padding: '2rem' }}>
+        <div>
           {/* Controls */}
           <div className="paste-controls">
             <div className="search-container">

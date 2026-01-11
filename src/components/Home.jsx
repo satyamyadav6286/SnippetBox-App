@@ -148,7 +148,7 @@ const Home = () => {
           </p>
         </div>
 
-        <div className="container" style={{ padding: '2rem' }}>
+        <div>
           {/* Stats Overview */}
           <div className="stats-container mb-4">
             <div className="stat-card">

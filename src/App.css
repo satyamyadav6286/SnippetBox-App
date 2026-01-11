@@ -64,23 +64,39 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background: var(--primary-bg);
+  padding: 1.5rem 0;
+}
+
+@media (max-width: 768px) {
+  .app {
+    padding: 1rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .app {
+    padding: 0.75rem 0;
+  }
 }
 
 /* Container Styles */
 .container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 24px;
+  width: 100%;
 }
 
 /* Modern Card Component */
 .modern-card {
   background: var(--card-bg);
-  border-radius: 16px;
+  border-radius: 12px;
   box-shadow: var(--shadow);
   border: 1px solid var(--border-color);
   transition: all 0.3s ease;
   overflow: hidden;
+  padding: 2rem;
 }
 
 .modern-card:hover {
@@ -149,21 +165,33 @@ body {
 /* Form Styles */
 .form-control {
   background: var(--card-bg) !important;
-  border: 2px solid var(--border-color) !important;
-  border-radius: 12px !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 8px !important;
   color: var(--text-primary) !important;
-  padding: 0.75rem 1rem !important;
-  transition: all 0.3s ease !important;
-  font-size: 1rem !important;
+  padding: 0.625rem 0.875rem !important;
+  transition: all 0.2s ease !important;
+  font-size: 0.9375rem !important;
 }
 
 .form-control:focus {
   border-color: var(--accent-color) !important;
-  box-shadow: 0 0 0 0.25rem rgba(116, 185, 255, 0.25) !important;
+  box-shadow: 0 0 0 3px rgba(116, 185, 255, 0.1) !important;
+  outline: none !important;
 }
 
 .form-control::placeholder {
   color: var(--text-secondary) !important;
+  opacity: 0.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
 }
 
 /* Button Styles */
@@ -249,45 +277,71 @@ body {
 
 /* Create Paste Page */
 .create-paste-container {
-  padding: 2rem;
-  margin: 2rem auto;
-  max-width: 800px;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 1200px;
+  width: 100%;
 }
 
 .page-header {
-  text-align: center;
+  text-align: left;
   margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.page-header h1 {
+  text-align: left;
 }
 
 .page-title {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   background: var(--gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin-bottom: 0.5rem;
+  line-height: 1.2;
 }
 
 .page-subtitle {
   color: var(--text-secondary);
-  font-size: 1.1rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
 }
 
 /* Paste List Styles */
 .paste-list-container {
-  padding: 2rem;
-  margin: 2rem auto;
-  max-width: 1000px;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 1400px;
+  width: 100%;
+  padding: 0 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .paste-list-container {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .paste-list-container {
+    padding: 0 0.75rem;
+  }
 }
 
 .paste-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   flex-wrap: wrap;
   gap: 1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .search-container {
@@ -298,8 +352,8 @@ body {
 .paste-item {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  border-radius: 16px;
-  padding: 1.5rem;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
   margin-bottom: 1rem;
   transition: all 0.3s ease;
 }
@@ -310,10 +364,11 @@ body {
 }
 
 .paste-title {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 0.5rem;
+  line-height: 1.4;
 }
 
 .paste-content-preview {
@@ -343,9 +398,23 @@ body {
 
 /* View Paste Page */
 .view-paste-container {
-  padding: 2rem;
-  margin: 2rem auto;
-  max-width: 1000px;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 1400px;
+  width: 100%;
+  padding: 0 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .view-paste-container {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .view-paste-container {
+    padding: 0 0.75rem;
+  }
 }
 
 .view-paste-container .d-flex.justify-content-between {
@@ -450,16 +519,16 @@ body {
 /* Statistics Cards */
 .stats-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1rem;
   margin-bottom: 2rem;
 }
 
 .stat-card {
-  background: var(--card-bg);
+  background: var(--secondary-bg);
   border: 1px solid var(--border-color);
-  border-radius: 16px;
-  padding: 1.5rem;
+  border-radius: 12px;
+  padding: 1.25rem 1rem;
   text-align: center;
   transition: all 0.3s ease;
 }
@@ -470,15 +539,18 @@ body {
 }
 
 .stat-number {
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: 700;
   color: var(--accent-color);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.375rem;
+  line-height: 1;
 }
 
 .stat-label {
   color: var(--text-secondary);
-  font-size: 0.9rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
 /* Tag Styles */
@@ -546,24 +618,32 @@ body {
 /* Tablets */
 @media (max-width: 768px) {
   .container {
-    padding: 0 12px;
+    padding: 0 16px;
   }
   
   .create-paste-container,
   .paste-list-container,
   .view-paste-container {
-    padding: 1rem;
-    margin: 0.5rem auto;
-    max-width: 95%;
+    max-width: 100%;
+  }
+  
+  .modern-card {
+    padding: 1.25rem;
+    border-radius: 12px;
+  }
+  
+  .page-header {
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
   }
   
   .page-title {
-    font-size: 2rem;
+    font-size: 1.75rem;
     line-height: 1.2;
   }
   
   .page-subtitle {
-    font-size: 1rem;
+    font-size: 0.875rem;
   }
   
   .navbar {
@@ -598,10 +678,11 @@ body {
   .stats-container {
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 0.75rem;
+    margin-bottom: 1.5rem;
   }
   
   .stat-card {
-    padding: 1rem;
+    padding: 1rem 0.75rem;
   }
   
   .stat-number {
@@ -609,13 +690,17 @@ body {
   }
   
   .btn {
-    padding: 0.6rem 1rem !important;
-    font-size: 0.9rem !important;
+    padding: 0.625rem 1rem !important;
+    font-size: 0.875rem !important;
   }
   
   .form-control {
-    padding: 0.6rem 0.8rem !important;
-    font-size: 0.9rem !important;
+    padding: 0.625rem 0.875rem !important;
+    font-size: 0.875rem !important;
+  }
+  
+  .paste-item {
+    padding: 1rem 1.25rem;
   }
   
   textarea.form-control {
@@ -635,15 +720,23 @@ body {
 /* Mobile phones */
 @media (max-width: 480px) {
   .container {
-    padding: 0 8px;
+    padding: 0 12px;
   }
   
   .create-paste-container,
   .paste-list-container,
   .view-paste-container {
-    padding: 0.75rem;
-    margin: 0.25rem auto;
-    max-width: 98%;
+    max-width: 100%;
+  }
+  
+  .modern-card {
+    padding: 1rem;
+    border-radius: 12px;
+  }
+  
+  .page-header {
+    padding-bottom: 1rem;
+    margin-bottom: 1.25rem;
   }
   
   .page-title {
@@ -652,7 +745,7 @@ body {
   }
   
   .page-subtitle {
-    font-size: 0.9rem;
+    font-size: 0.8125rem;
   }
   
   .navbar {
@@ -694,12 +787,13 @@ body {
   }
   
   .stats-container {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 0.5rem;
+    margin-bottom: 1.25rem;
   }
   
   .stat-card {
-    padding: 0.75rem;
+    padding: 0.875rem 0.5rem;
   }
   
   .stat-number {
@@ -707,19 +801,28 @@ body {
   }
   
   .stat-label {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
   }
   
   .btn {
-    padding: 0.5rem 0.75rem !important;
-    font-size: 0.85rem !important;
+    padding: 0.5rem 0.875rem !important;
+    font-size: 0.8125rem !important;
     border-radius: 8px !important;
   }
   
   .form-control {
-    padding: 0.5rem 0.75rem !important;
-    font-size: 0.85rem !important;
+    padding: 0.5625rem 0.75rem !important;
+    font-size: 0.8125rem !important;
     border-radius: 8px !important;
+  }
+  
+  .paste-item {
+    padding: 1rem;
+  }
+  
+  .paste-controls {
+    padding-bottom: 1rem;
+    margin-bottom: 1.25rem;
   }
   
   textarea.form-control {
